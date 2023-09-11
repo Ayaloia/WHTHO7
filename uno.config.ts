@@ -11,7 +11,8 @@ export default defineConfig({
   theme: {
     colors: {
       "whtho7-cyan": "#96fcf3",
-      "whtho-bg": "#0d1a1b"
+      "whtho-bg": "#0d1a1b",
+      "whtho7-green": "#2cbe9a",
     },
     fontFamily: {
       "sans-serif": ["Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif"],

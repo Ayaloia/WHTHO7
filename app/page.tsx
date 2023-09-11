@@ -2,6 +2,9 @@
 import localFont from "next/font/local";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Carousel } from "antd";
+import { useRef, useState } from "react";
+import { CarouselRef } from "antd/es/carousel";
 
 const lxgw = localFont({
     src: "LXGWWenKaiScreen.woff2",
@@ -22,7 +25,7 @@ export default function Home() {
                     </main>
                     <div className="h-fit w-full bg-whtho-bg relative">
                         <section
-                            className="text-white min-h-screen space-y-5 m-x-auto
+                            className="text-white min-h-screen m-x-auto p-y-3
                         w-87.5% max-w-360px md:w-716px md:max-w-none lg:w-972px">
                             <motion.article
                                 whileInView={{
@@ -50,11 +53,121 @@ export default function Home() {
                                 />
                             </motion.article>
                             <THOMsgList />
+                            <THOActivityCarousel />
                         </section>
                     </div>
                 </div>
             </main>
         </>
+    );
+}
+
+export function THOActivityCarousel() {
+    const activities = [
+        {
+            title: "激烈的则赛",
+            pic: "/1.jpg",
+        },
+        {
+            title: "超级舞踏会战争",
+            pic: "/2.jpg",
+        },
+        {
+            title: "是是覅文件",
+            pic: "/1.jpg",
+        },
+        {
+            title: "少爱沃克佛",
+            pic: "/2.jpg",
+        },
+        {
+            title: "无法我佛我佛无法",
+            pic: "/1.jpg",
+        },
+    ];
+
+    const [activeIndex, setActiveIndex] = useState(0);
+    const carouselRef = useRef<CarouselRef>(null);
+    function carouselSwitchTo(index: number, isFromCarousel: boolean) {
+        if (index === activeIndex) return;
+        setActiveIndex(index);
+        if (isFromCarousel) return;
+        carouselRef.current?.goTo(index);
+    }
+
+    function getVariantsByXY(x: number, y: number) {
+        return {
+            hidden: {
+                opacity: 0,
+                transform: `translateX(${x}rem) translateY(${y}rem)`,
+            },
+            show: {
+                opacity: 1,
+                transform: "translateX(0rem) translateY(0rem)",
+            },
+        };
+    }
+    return (
+        <motion.div
+            // 这个抽象的横向 Grid 纵向 Flex 是为了让走马灯调按钮在 bottom 时不崩掉，虽然也不知道为什么= =
+            className="md:grid md:grid-cols-2 lt-md:flex lt-md:flex-col gap-20px md:gap-50px m-t-50"
+            initial="hidden"
+            whileInView="show"
+            viewport={{
+                margin: "10% 0px -30% 0px",
+            }}>
+            <motion.div
+                className="flex-1 border-2 rounded-xl shadow-lg"
+                variants={getVariantsByXY(-1.25, -1.25)}>
+                <ul className="h-full line-height-48px md:line-height-64px">
+                    {activities.map((activity, idx) => (
+                        <li
+                            onMouseMove={() => {
+                                carouselSwitchTo(idx, false);
+                            }}
+                            className={`p-x-3 first:rounded-t-xl last:rounded-b-xl relative text-center ${
+                                idx === activeIndex
+                                    ? "bg-dark-2 after:scale-x-100"
+                                    : "odd:bg-dark-5 even:bg-dark-7 after:scale-x-0"
+                            } transition ease-in-out duration-400 after:content-[''] 
+                            after:transition-transform after:ease-in-out after:duration-400 after:bg-white after:absolute after:bottom-15% after:left-35% after:h-1px after:w-30%`}>
+                            <h1 className="text-4 md:text-6">
+                                {activity.title}
+                            </h1>
+                        </li>
+                    ))}
+                </ul>
+            </motion.div>
+            <motion.div
+                className="flex-1 rounded-xl shadow-lg overflow-hidden"
+                variants={getVariantsByXY(1.25, 1.25)}>
+                <Carousel
+                    ref={carouselRef}
+                    effect="fade"
+                    easing="duration-1500"
+                    autoplay
+                    autoplaySpeed={3000}
+                    dots={false}
+                    beforeChange={(from, to) => {
+                        carouselSwitchTo(to, true);
+                    }}>
+                    {activities.map((activity, idx) => (
+                        <motion.div
+                            className="relative"
+                            initial={{
+                                height: `${64 * activities.length}px`,
+                            }}>
+                            <Image
+                                className="object-cover object-center"
+                                src={activity.pic}
+                                alt={activity.title}
+                                fill
+                            />
+                        </motion.div>
+                    ))}
+                </Carousel>
+            </motion.div>
+        </motion.div>
     );
 }
 
@@ -77,10 +190,13 @@ export function THOMsgList() {
         };
     }
     const msgMap = [
-        ["名称", "武汉 THO7 · 楚韵九歌", "东方 Project-Only 同人展会"],
-        ["主题", "东方神灵庙", "Ten Desires"],
-        ["时间", "2023 年 10 月 4 日", "国庆中秋双佳节连假之时"],
-        ["地点", "武汉市武昌区巴山夜雨大酒店", "九省通衢之地"],
+        ["活动名称", "武汉 THO7 · 楚韵九歌", "东方 Project-Only 同人展会"],
+        ["活动时间", "2023 年 10 月 4 日", "国庆中秋双佳节连假之时"],
+        [
+            "活动地点",
+            "湖北武汉洪山区巴山夜雨大酒店 2F 金色大厅",
+            "九省通衢之地",
+        ],
     ];
     return (
         <motion.dl
@@ -97,7 +213,7 @@ export function THOMsgList() {
                 margin: "10% 0px -30% 0px",
                 amount: 0,
             }}
-            className="space-y-1  m-x-auto">
+            className="space-y-1  m-x-auto m-t-10">
             {msgMap.map((msg, index) => (
                 <>
                     <motion.dt
