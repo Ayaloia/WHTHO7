@@ -1,6 +1,6 @@
 "use client";
 import localFont from "next/font/local";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { Carousel } from "antd";
 import { useRef, useState } from "react";
@@ -13,74 +13,193 @@ const lxgw = localFont({
 export default function Home() {
     return (
         <>
-            {/* <div className="bg-[#204949] absolute h-full w-full transition-opacity ease-in-out opacity-0"></div> */}
-            <main className={`bg-whtho-bg h-fit font-sans-serif`}>
-                <div className="h-fit">
-                    <main className="flex flex-col items-center h-screen w-full sticky top-0 bg-whtho-bg overflow-hidden">
-                        <h1
-                            className={`${lxgw.className} hover:scale-110 ease-in-out duration-100 transition-transform font-light text-5xl md:text-6xl lg:text-7xl absolute text-center top-1/3 text-whtho7-cyan -rotate-12`}>
-                            暌违两年半
-                            <br /> 武汉 THO 重磅归来
-                        </h1>
-                    </main>
-                    <div className="h-fit w-full bg-whtho-bg relative">
-                        <section
-                            className="text-white min-h-screen m-x-auto p-y-3
-                        w-87.5% max-w-360px md:w-716px md:max-w-none lg:w-972px">
-                            <motion.article
-                                whileInView={{
-                                    opacity: 1,
-                                    transform: "translateX(0rem)",
-                                }}
-                                viewport={{ margin: "10% 0px -30% 0px" }}
-                                className="rounded-xl relative opacity-0 translate-x--5 w-90%">
-                                <h1
-                                    className={`text-8 sm:text-10 lg:text-12 ${lxgw.className}`}>
-                                    武汉 THO，复活！
-                                </h1>
-                                <p className="text-white text-4 sm:text-6 z-10 relative">
-                                    武汉 THO 是纯度超高的东方 Project-Only
-                                    同人展会，首次创办至今已是第11年。这次，四处散播信仰的神灵庙豪族举办了盛大的庙会；同人作品展销、器乐演奏、游戏活动、互动问答环节、minilive，你想到的活动应有尽有！
-                                </p>
-                                <Image
-                                    src="/WHTHONLYLOGO.png"
-                                    alt="WHTHONLYLOGO"
-                                    width={88}
-                                    height={193}
-                                    sizes="88px, (min-width: 768px) 176px"
-                                    draggable={false}
-                                    className="absolute object-contain right--2rem lg:right--4rem rotate-7 bottom--3rem h-10rem lg:h-16rem lg:bottom--8rem select-none"
-                                />
-                            </motion.article>
-                            <THOMsgList />
-                            <THOActivityCarousel />
-                        </section>
-                    </div>
-                </div>
+            <motion.div
+                className="bg-whtho-bg absolute top-0 w-full h-screen z-20"
+                initial={{ opacity: 1 }}
+                animate={{
+                    opacity: 0,
+                    transition: { duration: 1, ease: "easeInOut" },
+                }}></motion.div>
+            <main className={`bg-whtho-bg h-fit font-sans-serif text-white`}>
+                <Whtho7LeadIn />
+                <section className="w-whtho7-layout ">
+                    <Whtho7H1Div
+                        title="活动亮点"
+                        titleClassName={`${lxgw.className}`}>
+                        <p>wwwfifjiwjiwfjiwfjiwfjifjifji</p>
+                    </Whtho7H1Div>
+                    <THOActivityCarousel />
+                    <h1>wgwghgwgwgwgw</h1>
+                </section>
             </main>
         </>
+    );
+}
+
+function getTranslateVariantsByXY(x: number, y: number) {
+    return {
+        hidden: {
+            opacity: 0,
+            transform: `translateX(${x}rem) translateY(${y}rem)`,
+        },
+        show: {
+            opacity: 1,
+            transform: "translateX(0rem) translateY(0rem)",
+        },
+    };
+}
+
+export function Whtho7LeadIn() {
+    const mainMainRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress: mainMainScrollYProgressReverse } = useScroll({
+        target: mainMainRef,
+        offset: ["180vh end", "100vh end"],
+    });
+    const whthoLogoTransform = useTransform(
+        mainMainScrollYProgressReverse,
+        [1, 0.75, 0.5, 0],
+        [
+            "translateY(10vh) translateX(-44px)",
+            "translateY(30vh) translateX(-44px)",
+            "translateY(30vh) translateX(-44px) rotate(0deg)",
+            "translateY(30vh) translateX(0px) rotate(7deg)",
+        ]
+    );
+    const whthologoLeft = useTransform(
+        mainMainScrollYProgressReverse,
+        [1, 0.5, 0],
+        ["50%", "50%", "100%"]
+    );
+    const whthologoTop = useTransform(
+        mainMainScrollYProgressReverse,
+        [1, 0.5, 0],
+        ["0%", "0%", "100%"]
+    );
+    const mainMainOpacity = useTransform(
+        mainMainScrollYProgressReverse,
+        [1, 0.75, 0],
+        [1, 0, 0]
+    );
+    return (
+        <div ref={mainMainRef} className="h-fit">
+            <motion.main
+                className="flex flex-col items-center h-120vh w-full sticky top-0 bg-whtho-bg overflow-hidden []"
+                style={{
+                    opacity: mainMainOpacity,
+                }}>
+                <h1
+                    className={`${lxgw.className} font-light text-5xl md:text-6xl lg:text-7xl absolute text-center top-40vh text-whtho7-cyan `}>
+                    武汉 THO 7
+                    <br /> 楚韵九歌
+                </h1>
+            </motion.main>
+            <div className="absolute h-[calc(90vh+320px)] top-0 left-0 right-0 w-whtho7-layout">
+                <motion.figure
+                    className="sticky w-fit h-fit z-10"
+                    style={{
+                        left: whthologoLeft,
+                        transform: whthoLogoTransform,
+                        top: whthologoTop,
+                    }}>
+                    <Image
+                        src="/WHTHONLYLOGO.png"
+                        alt="WHTHONLYLOGO"
+                        width={88}
+                        height={193}
+                        sizes="88px, (min-width: 768px) 176px"
+                        draggable={false}
+                        className="object-contain h-10rem lg:h-16rem select-none"
+                    />
+                </motion.figure>
+            </div>
+            <div className="h-fit w-full bg-whtho-bg relative">
+                <section className="p-y-3 w-whtho7-layout">
+                    <Whtho7H1Div
+                        title="WHTHO，复活！"
+                        titleClassName={`${lxgw.className}`}
+                        className="m-r-88px">
+                        <p>
+                            武汉 THO 是纯度超高的东方 Project-Only
+                            同人展会，首次创办至今已是第11年。这次，四处散播信仰的神灵庙豪族举办了盛大的庙会；同人作品展销、器乐演奏、游戏活动、互动问答环节、minilive，你想到的活动应有尽有！
+                        </p>
+                    </Whtho7H1Div>
+                    <THOMsgList />
+                </section>
+            </div>
+        </div>
+    );
+}
+
+export function Whtho7H1Div(
+    props: React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLHeadingElement>,
+        HTMLHeadingElement
+    > & {
+        title: string;
+        titleClassName?: string;
+        children?: React.ReactNode;
+    }
+) {
+    const { title, children, titleClassName, className } = props;
+    return (
+        <motion.div
+            variants={{
+                show: {
+                    transition: {
+                        staggerChildren: 0.2,
+                    },
+                },
+            }}
+            initial="hidden"
+            className="m-y-10"
+            viewport={{
+                margin: "20% 0% 0% 0%",
+                amount: 0.95,
+            }}
+            whileInView="show">
+            <motion.h1
+                variants={getTranslateVariantsByXY(-4, 0)}
+                className={`text-whtho7-h1 ${
+                    titleClassName ?? ""
+                } text-white bg-whtho7-green
+                lg:m-l--64px lg:p-l-40px md:m-l--54px md:p-l-30px m-l--20px p-l-20px m-r-25% rounded-r-12 rounded-l-lg p-y-4`}>
+                {title}
+            </motion.h1>
+            {children ? (
+                <motion.div
+                    variants={getTranslateVariantsByXY(-1, 0)}
+                    className={`text-whtho7-p m-t-6 ${className ?? ""}`}>
+                    {children}
+                </motion.div>
+            ) : null}
+        </motion.div>
     );
 }
 
 export function THOActivityCarousel() {
     const activities = [
         {
+            key: 0,
             title: "激烈的则赛",
             pic: "/1.jpg",
         },
         {
+            key: 1,
             title: "超级舞踏会战争",
             pic: "/2.jpg",
         },
         {
+            key: 2,
             title: "是是覅文件",
             pic: "/1.jpg",
         },
         {
+            key: 3,
             title: "少爱沃克佛",
             pic: "/2.jpg",
         },
         {
+            key: 4,
             title: "无法我佛我佛无法",
             pic: "/1.jpg",
         },
@@ -95,18 +214,6 @@ export function THOActivityCarousel() {
         carouselRef.current?.goTo(index);
     }
 
-    function getVariantsByXY(x: number, y: number) {
-        return {
-            hidden: {
-                opacity: 0,
-                transform: `translateX(${x}rem) translateY(${y}rem)`,
-            },
-            show: {
-                opacity: 1,
-                transform: "translateX(0rem) translateY(0rem)",
-            },
-        };
-    }
     return (
         <motion.div
             // 这个抽象的横向 Grid 纵向 Flex 是为了让走马灯调按钮在 bottom 时不崩掉，虽然也不知道为什么= =
@@ -118,10 +225,11 @@ export function THOActivityCarousel() {
             }}>
             <motion.div
                 className="flex-1 border-2 rounded-xl shadow-lg"
-                variants={getVariantsByXY(-1.25, -1.25)}>
+                variants={getTranslateVariantsByXY(-1.25, -1.25)}>
                 <ul className="h-full line-height-48px md:line-height-64px">
                     {activities.map((activity, idx) => (
                         <li
+                            key={activity.key}
                             onMouseMove={() => {
                                 carouselSwitchTo(idx, false);
                             }}
@@ -140,7 +248,7 @@ export function THOActivityCarousel() {
             </motion.div>
             <motion.div
                 className="flex-1 rounded-xl shadow-lg overflow-hidden"
-                variants={getVariantsByXY(1.25, 1.25)}>
+                variants={getTranslateVariantsByXY(1.25, 1.25)}>
                 <Carousel
                     ref={carouselRef}
                     effect="fade"
@@ -190,9 +298,10 @@ export function THOMsgList() {
         };
     }
     const msgMap = [
-        ["活动名称", "武汉 THO7 · 楚韵九歌", "东方 Project-Only 同人展会"],
-        ["活动时间", "2023 年 10 月 4 日", "国庆中秋双佳节连假之时"],
+        [0, "活动名称", "武汉 THO7 · 楚韵九歌", "东方 Project-Only 同人展会"],
+        [1, "活动时间", "2023 年 10 月 4 日", "国庆中秋双佳节连假之时"],
         [
+            2,
             "活动地点",
             "湖北武汉洪山区巴山夜雨大酒店 2F 金色大厅",
             "九省通衢之地",
@@ -217,16 +326,17 @@ export function THOMsgList() {
             {msgMap.map((msg, index) => (
                 <>
                     <motion.dt
+                        key={msg[0]}
                         variants={getVariantsByIndex(0)}
-                        className={`text-5 sm:text-8 ${lxgw.className}`}>
-                        {msg[0]}
+                        className={`text-whtho7-h2 ${lxgw.className}`}>
+                        {msg[1]}
                     </motion.dt>
-                    <dd className="flex justify-between space-x-2 text-4 sm:text-6">
+                    <dd className="flex justify-between space-x-2 text-whtho7-p">
                         <motion.p variants={getVariantsByIndex(1)}>
-                            {msg[1]}
+                            {msg[2]}
                         </motion.p>
                         <motion.p variants={getVariantsByIndex(2)}>
-                            {msg[2]}
+                            {msg[3]}
                         </motion.p>
                     </dd>
                 </>
