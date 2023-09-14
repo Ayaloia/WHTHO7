@@ -13,13 +13,6 @@ const lxgw = localFont({
 export default function Home() {
     return (
         <>
-            <motion.div
-                className="bg-whtho-bg absolute top-0 w-full h-screen z-20"
-                initial={{ opacity: 1 }}
-                animate={{
-                    opacity: 0,
-                    transition: { duration: 1, ease: "easeInOut" },
-                }}></motion.div>
             <main className={`bg-whtho-bg h-fit font-sans-serif text-white`}>
                 <Whtho7LeadIn />
                 <section className="w-whtho7-layout ">
@@ -49,15 +42,62 @@ function getTranslateVariantsByXY(x: number, y: number) {
     };
 }
 
+export function RandomInvert() {
+    return (
+        <motion.div
+            className="absolute scale-80% md:scale-100% lg:scale-120% backdrop-invert shadow-lg"
+            style={{
+                top: `${Math.random() * 100}vh`,
+                left: `${Math.random() * 100}vw`,
+                width: `${Math.random() * 20 + 90}px`,
+                height: `${Math.random() * 10 + 45}px`,
+                rotate: `${Math.random() > 0.75 ? 90 : 0}deg`,
+            }}
+            animate={{
+                opacity: [0, 1, 1, 0],
+                transition: {
+                    delay: Math.random() * 20,
+                    duration: Math.random() * 2 + 0.4,
+                    ease: "linear",
+                    times: [0, 0.001, 0.999, 1],
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    repeatDelay: Math.random() * 7 + 5,
+                },
+            }}
+        />
+    );
+}
+
+export function MainMainSpEffects() {
+    return (
+        <>
+            <div className="absolute top-0 left-0 z-20 overflow-hidden w-100% h-screen">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <RandomInvert key={index} />
+                ))}
+            </div>
+            <motion.div
+                className="bg-whtho-bg absolute top-0 w-full h-screen z-20"
+                initial={{ opacity: 1 }}
+                animate={{
+                    opacity: 0,
+                    transition: { duration: 1, ease: "easeInOut" },
+                }}
+            />
+        </>
+    );
+}
+
 export function Whtho7LeadIn() {
     const mainMainRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress: mainMainScrollYProgressReverse } = useScroll({
         target: mainMainRef,
-        offset: ["180vh end", "100vh end"],
+        offset: ["170vh end", "100vh end"],
     });
     const whthoLogoTransform = useTransform(
         mainMainScrollYProgressReverse,
-        [1, 0.75, 0.5, 0],
+        [1, 0.8, 0.5, 0],
         [
             "translateY(10vh) translateX(-44px)",
             "translateY(30vh) translateX(-44px)",
@@ -77,13 +117,13 @@ export function Whtho7LeadIn() {
     );
     const mainMainOpacity = useTransform(
         mainMainScrollYProgressReverse,
-        [1, 0.75, 0],
+        [1, 0.6, 0],
         [1, 0, 0]
     );
     return (
         <div ref={mainMainRef} className="h-fit">
             <motion.main
-                className="flex flex-col items-center h-120vh w-full sticky top-0 bg-whtho-bg overflow-hidden []"
+                className="flex flex-col items-center h-100vh w-full sticky top-0 bg-whtho-bg overflow-hidden max-w-1440px m-x-auto"
                 style={{
                     opacity: mainMainOpacity,
                 }}>
@@ -92,8 +132,9 @@ export function Whtho7LeadIn() {
                     武汉 THO 7
                     <br /> 楚韵九歌
                 </h1>
+                <MainMainSpEffects />
             </motion.main>
-            <div className="absolute h-[calc(90vh+320px)] top-0 left-0 right-0 w-whtho7-layout">
+            <div className="absolute h-[calc(70vh+320px)] top-0 left-0 right-0 w-whtho7-layout">
                 <motion.figure
                     className="sticky w-fit h-fit z-10"
                     style={{
