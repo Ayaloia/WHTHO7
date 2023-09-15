@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Carousel } from "antd";
 import { useRef, useState } from "react";
 import { CarouselRef } from "antd/es/carousel";
+import { SkewedCard } from "./IndexClientComponent";
 
 const lxgw = localFont({
     src: "LXGWWenKaiScreen.woff2",
@@ -13,17 +14,16 @@ const lxgw = localFont({
 export default function Home() {
     return (
         <>
-            <main className={`bg-whtho-bg h-fit font-sans-serif text-white`}>
+            <main
+                className={`bg-whtho-bg h-fit font-sans-serif text-white text-whtho7-p`}>
                 <Whtho7LeadIn />
                 <section className="w-whtho7-layout ">
                     <Whtho7H1Div
-                        title="活动亮点"
-                        titleClassName={`${lxgw.className}`}>
-                        <p>wwwfifjiwjiwfjiwfjiwfjifjifji</p>
-                    </Whtho7H1Div>
-                    <THOActivityCarousel />
-                    <h1>wgwghgwgwgwgw</h1>
+                        title="活动内容"
+                        titleClassName={`${lxgw.className}`}></Whtho7H1Div>
+                    <THOGameActivities />
                 </section>
+                <section className="m-t-10">111</section>
             </main>
         </>
     );
@@ -40,6 +40,31 @@ function getTranslateVariantsByXY(x: number, y: number) {
             transform: "translateX(0rem) translateY(0rem)",
         },
     };
+}
+
+export function AndMoreLabel(
+    props: React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLHeadingElement>,
+        HTMLHeadingElement
+    >
+) {
+    const { className } = props;
+    return (
+        <motion.div
+            className={`flex flex-row-reverse ${className ?? ""}`}
+            initial="hidden"
+            whileInView="show"
+            variants={getTranslateVariantsByXY(1, 0)}>
+            <p className="w-fit bg-whtho7-blue p-2 text-green-6 relative font-extrabold font-sans">
+                <svg
+                    viewBox="0 0 9 8"
+                    className="absolute translate-x--90% top-0 left-0 h-full fill-whtho7-blue">
+                    <polygon points="8,0 0,8 9,8 9,0" />
+                </svg>
+                And More!!
+            </p>
+        </motion.div>
+    );
 }
 
 export function RandomInvert() {
@@ -192,7 +217,7 @@ export function Whtho7H1Div(
                 },
             }}
             initial="hidden"
-            className="m-y-10"
+            className="m-t-10 m-b-5"
             viewport={{
                 margin: "20% 0% 0% 0%",
                 amount: 0.95,
@@ -202,7 +227,7 @@ export function Whtho7H1Div(
                 variants={getTranslateVariantsByXY(-4, 0)}
                 className={`text-whtho7-h1 ${
                     titleClassName ?? ""
-                } text-white bg-whtho7-green
+                } text-white bg-whtho7-green shadow-md shadow-white
                 lg:m-l--64px lg:p-l-40px md:m-l--54px md:p-l-30px m-l--20px p-l-20px m-r-25% rounded-r-12 rounded-l-lg p-y-4`}>
                 {title}
             </motion.h1>
@@ -217,32 +242,84 @@ export function Whtho7H1Div(
     );
 }
 
+export function Whtho7H2Div(
+    props: React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLHeadingElement>,
+        HTMLHeadingElement
+    > & {
+        title: string;
+        titleClassName?: string;
+        children?: React.ReactNode;
+        rootClassName?: string;
+    }
+) {
+    const { title, children, titleClassName, className, rootClassName } = props;
+    return (
+        <motion.div
+            className={`${rootClassName ?? ""}`}
+            variants={{
+                show: {
+                    transition: {
+                        staggerChildren: 0.2,
+                    },
+                },
+            }}
+            initial="hidden"
+            viewport={{
+                margin: "20% 0% 0% 0%",
+                amount: 0.95,
+            }}
+            whileInView="show">
+            <motion.h2
+                className={`relative text-whtho7-h2 w-fit p-y-2 p-x-4 m-l-[calc(-1rem-2px)] ${
+                    titleClassName ?? ""
+                } rounded-1 bg-whtho7-cyan-2 shadow-[0_0_8px_4px_#0000] shadow-whtho7-cyan border-2 border-whtho7-cyan`}
+                variants={{
+                    hidden: { opacity: 0, scale: 0 },
+                    show: {
+                        opacity: 1,
+                        scale: 1.0,
+                    },
+                }}>
+                {title}
+            </motion.h2>
+            {children ? (
+                <motion.div
+                    variants={getTranslateVariantsByXY(-1, 0)}
+                    className={`text-whtho7-p m-t-2 ${className ?? ""}`}>
+                    {children}
+                </motion.div>
+            ) : null}
+        </motion.div>
+    );
+}
+
 export function THOActivityCarousel() {
     const activities = [
         {
             key: 0,
-            title: "激烈的则赛",
-            pic: "/1.jpg",
+            title: "东方裁判梦",
+            pic: "/东方裁判梦.png",
         },
         {
             key: 1,
-            title: "超级舞踏会战争",
-            pic: "/2.jpg",
+            title: "东方冰之勇者记",
+            pic: "/东方冰之勇者记.jpg",
         },
         {
             key: 2,
-            title: "是是覅文件",
-            pic: "/1.jpg",
+            title: "幻走 SkyDrift",
+            pic: "/幻走_SkyDrift.jpg",
         },
         {
             key: 3,
-            title: "少爱沃克佛",
-            pic: "/2.jpg",
+            title: "毛玉大冒险",
+            pic: "/毛玉大冒险.jpg",
         },
         {
             key: 4,
-            title: "无法我佛我佛无法",
-            pic: "/1.jpg",
+            title: "幻想女武神",
+            pic: "/幻想女武神.jpg",
         },
     ];
 
@@ -258,16 +335,14 @@ export function THOActivityCarousel() {
     return (
         <motion.div
             // 这个抽象的横向 Grid 纵向 Flex 是为了让走马灯调按钮在 bottom 时不崩掉，虽然也不知道为什么= =
-            className="md:grid md:grid-cols-2 lt-md:flex lt-md:flex-col gap-20px md:gap-50px m-t-50"
+            className="md:grid md:grid-cols-3 lt-md:flex lt-md:flex-col gap-20px m-y-2"
             initial="hidden"
             whileInView="show"
             viewport={{
                 margin: "10% 0px -30% 0px",
             }}>
-            <motion.div
-                className="flex-1 border-2 rounded-xl shadow-lg"
-                variants={getTranslateVariantsByXY(-1.25, -1.25)}>
-                <ul className="h-full line-height-48px md:line-height-64px">
+            <div className="flex-1 border-2 rounded-xl">
+                <ul className="h-full line-height-48px md:line-height-64px lg:line-height-80px">
                     {activities.map((activity, idx) => (
                         <li
                             key={activity.key}
@@ -286,10 +361,8 @@ export function THOActivityCarousel() {
                         </li>
                     ))}
                 </ul>
-            </motion.div>
-            <motion.div
-                className="flex-1 rounded-xl shadow-lg overflow-hidden"
-                variants={getTranslateVariantsByXY(1.25, 1.25)}>
+            </div>
+            <div className="flex-1 col-span-2 rounded-xl overflow-hidden [--carousel-length:3] md:[--carousel-length:5] lg:[--carousel-length:6.33]">
                 <Carousel
                     ref={carouselRef}
                     effect="fade"
@@ -302,20 +375,21 @@ export function THOActivityCarousel() {
                     }}>
                     {activities.map((activity, idx) => (
                         <motion.div
-                            className="relative"
+                            className="relative w-fit"
                             initial={{
-                                height: `${64 * activities.length}px`,
+                                height: `calc(var(--carousel-length) * 64px)`,
                             }}>
                             <Image
-                                className="object-cover object-center"
+                                className="object-fill object-center"
                                 src={activity.pic}
                                 alt={activity.title}
                                 fill
+                                sizes="(min-width: 1024px) 619px, (min-width: 768px) 448px, 326px"
                             />
                         </motion.div>
                     ))}
                 </Carousel>
-            </motion.div>
+            </div>
         </motion.div>
     );
 }
@@ -383,5 +457,107 @@ export function THOMsgList() {
                 </>
             ))}
         </motion.dl>
+    );
+}
+
+export function THOGameActivities() {
+    return (
+        <section>
+            <Whtho7H2Div title="游戏内容" titleClassName={`${lxgw.className}`}>
+                <p>丰富的游戏活动：同人游戏试玩、舞台游戏活动、音游区……</p>
+            </Whtho7H2Div>
+            <SkewedCard>
+                <p>众多游戏，任你试玩！</p>
+                <THOActivityCarousel />
+                <AndMoreLabel className="m-b--4 m-r--4" />
+            </SkewedCard>
+            <div className="flex flex-col md:flex-row md:gap-4 md:h-280px lg:h-320px">
+                <SkewedCard className="flex flex-col lt-md:h-280px">
+                    <h3 className="text-whtho7-h3">舞台游戏活动</h3>
+                    <ul
+                        role="list"
+                        className="list-image-[url(/MaterialSymbolsArrowRightAltRounded.svg)] list-inside">
+                        <li key={0}>STG 弹幕接龙</li>
+                        <li key={1}>非想天则比赛</li>
+                    </ul>
+                    <div className="flex flex-row flex-1 gap-2 m-b--4">
+                        <figure
+                            className="flex-1 relative opacity-80 m-l--4"
+                            style={{
+                                maskImage:
+                                    "radial-gradient(at bottom left, #000000, #000000 25%, transparent 70%)",
+                                WebkitMaskImage:
+                                    "radial-gradient(at bottom left, #000000, #000000 25%, transparent 70%)",
+                            }}>
+                            <Image
+                                src={"/fxtz.png"}
+                                alt="fxtz"
+                                fill
+                                className="object-cover"
+                            />
+                        </figure>
+                        <div
+                            className="flex-1 relative opacity-80 m-r--4"
+                            style={{
+                                maskImage:
+                                    "radial-gradient(at bottom right, #000000, #000000 25%, transparent 70%)",
+                                WebkitMaskImage:
+                                    "radial-gradient(at bottom right, #000000, #000000 25%, transparent 70%)",
+                            }}>
+                            <Image
+                                src={"/stg.png"}
+                                alt="stg"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </div>
+                </SkewedCard>
+                <SkewedCard className="flex flex-col lt-md:h-350px gap-2">
+                    <h3 className="text-whtho7-h3">音游区</h3>
+                    <p>音游免费试玩，更有未公布的彩蛋音游！</p>
+                    <div className="flex-3 md:flex-2 flex flex-col md:flex-row gap-2">
+                        <div className="flex-2 md:flex-1 relative opacity-80">
+                            <Image
+                                src={"/太鼓达人.jpg"}
+                                alt="太鼓达人"
+                                fill
+                                className="md:object-cover object-contain"
+                            />
+                        </div>
+                        <div className="flex-1 flex flex-row md:flex-col gap-1">
+                            <div className="flex-1 relative opacity-80">
+                                <Image
+                                    src={"/chunithm_amazon.png"}
+                                    alt="chunithm_amazon"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="flex-1 relative opacity-80">
+                                <Image
+                                    src={"/chunithm_amazon_plus.png"}
+                                    alt="chunithm_amazon_plus.png"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-row flex-1">
+                        <div className="flex-1 relative opacity-50">
+                            <Image
+                                src={"/project_diva_arcade.png"}
+                                alt="project_diva_arcade"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
+                        <div className="flex-1" />
+                    </div>
+                    <AndMoreLabel className="absolute w-fit h-min bottom-0 right-0" />
+                </SkewedCard>
+            </div>
+        </section>
     );
 }
