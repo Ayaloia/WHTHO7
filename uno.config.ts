@@ -8,6 +8,14 @@ export default defineConfig({
   transformers: [
     transformerVariantGroup(),
   ],
+  rules: [
+    ["animation-composition-add", {"animation-composition": "add"}],
+    ["animation-composition-replace", {"animation-composition": "replace"}],
+    ["animation-composition-accumulate", {"animation-composition": "accumulate"}],
+    ["animation-random-move", {
+      "animation": "horizontal 2.6s infinite linear alternate,vertical 1.9s infinite  linear alternate;"}]
+
+  ],
   shortcuts: {
     "text-whtho7-h1": "text-8 md:text-10 lg:text-12 md:m-l--24px",
     "text-whtho7-h2": "text-6 md:text-7 lg:text-8",
@@ -20,6 +28,8 @@ export default defineConfig({
     "flex-4": "flex-[4_4_0%]",
     "flex-5": "flex-[5_5_0%]",
     "flex-6": "flex-[6_6_0%]",
+    "keyframes-random-move": "keyframes-horizontal keyframes-vertical",
+    "animate-random-move": "keyframes-random-move animation-random-move animation-composition-accumulate", 
   },
   theme: {
     colors: {
@@ -32,6 +42,12 @@ export default defineConfig({
     },
     fontFamily: {
       "sans-serif": ["Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif"],
+    },
+    animation: {
+      keyframes: {
+        "horizontal" :`{from { transform: translateX(0) }to { transform: translateX(calc(100vw - 100%)) }}`,
+        "vertical" :`{from { transform: translateY(0); }to { transform: translateY(calc(100vh - 100%)); }}`,
+      },
     },
   },
 })

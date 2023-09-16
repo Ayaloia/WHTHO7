@@ -18,7 +18,7 @@ export function SkewedCard({
         // 参考了 GitHub 官网的实现，不过这里重复用了 while/when Hover，可能会有性能问题
         <motion.div
             ref={ref}
-            className={`w-full h-full ${className} m-t-4 border-gray rounded-xl bg-card-bg border-1 p-4 overflow-hidden`}
+            className={`w-full h-full border-gray rounded-xl bg-card-bg border-1 p-4 overflow-hidden ${className}`}
             initial={{ transform: "perspective(700px) rotateX(0) rotateY(0)" }}
             whileHover={{
                 transformOrigin: "center",

@@ -1,11 +1,19 @@
 "use client";
 import localFont from "next/font/local";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+    AnimatePresence,
+    motion,
+    useInView,
+    useScroll,
+    useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import { Carousel } from "antd";
 import { useRef, useState } from "react";
 import { CarouselRef } from "antd/es/carousel";
 import { SkewedCard } from "./IndexClientComponent";
+import { MdiMusic, MdiMusicNote, MdiMusicNoteQuarter } from "./svg";
+import { useImmer } from "use-immer";
 
 const lxgw = localFont({
     src: "LXGWWenKaiScreen.woff2",
@@ -22,6 +30,7 @@ export default function Home() {
                         title="活动内容"
                         titleClassName={`${lxgw.className}`}></Whtho7H1Div>
                     <THOGameActivities />
+                    <THOMusicActivities />
                 </section>
                 <section className="m-t-10">111</section>
             </main>
@@ -91,6 +100,43 @@ export function RandomInvert() {
                 },
             }}
         />
+    );
+}
+
+export function MusicNoteSpring() {
+    const r = 50;
+    let musicNoteSvg = [MdiMusic, MdiMusicNote, MdiMusicNoteQuarter];
+    return (
+        <div className="absolute top-0 left-0 h-full w-full translate-y-100%">
+            {Array.from({ length: 20 }).map((_, index) => (
+                <motion.div
+                    key={index}
+                    className="absolute top-0 left-0 z-10 aspect-square h-full"
+                    initial={{
+                        left: `${Math.random() * 100}%`,
+                        opacity: 1,
+                        transform: `translateX(0px) translateY(0px)`,
+                    }}
+                    animate={{
+                        opacity: 0,
+                        transform: `translateX(${
+                            Math.random() * r - r / 2
+                        }px) translateY(-${Math.random() * r}px)`,
+                        transition: {
+                            delay: Math.random() * 1,
+                            duration: Math.random() * 1 + 1,
+                            ease: "linear",
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            repeatDelay: Math.random() * 1,
+                        },
+                    }}>
+                    {musicNoteSvg[Math.floor(Math.random() * 3)]({
+                        className: "w-full h-full",
+                    })}
+                </motion.div>
+            ))}
+        </div>
     );
 }
 
@@ -333,14 +379,9 @@ export function THOActivityCarousel() {
     }
 
     return (
-        <motion.div
+        <div
             // 这个抽象的横向 Grid 纵向 Flex 是为了让走马灯调按钮在 bottom 时不崩掉，虽然也不知道为什么= =
-            className="md:grid md:grid-cols-3 lt-md:flex lt-md:flex-col gap-20px m-y-2"
-            initial="hidden"
-            whileInView="show"
-            viewport={{
-                margin: "10% 0px -30% 0px",
-            }}>
+            className="md:grid md:grid-cols-3 lt-md:flex lt-md:flex-col gap-20px m-y-2">
             <div className="flex-1 border-2 rounded-xl">
                 <ul className="h-full line-height-48px md:line-height-64px lg:line-height-80px">
                     {activities.map((activity, idx) => (
@@ -390,7 +431,7 @@ export function THOActivityCarousel() {
                     ))}
                 </Carousel>
             </div>
-        </motion.div>
+        </div>
     );
 }
 
@@ -466,12 +507,12 @@ export function THOGameActivities() {
             <Whtho7H2Div title="游戏内容" titleClassName={`${lxgw.className}`}>
                 <p>丰富的游戏活动：同人游戏试玩、舞台游戏活动、音游区……</p>
             </Whtho7H2Div>
-            <SkewedCard>
+            <SkewedCard className="m-t-4">
                 <p>众多游戏，任你试玩！</p>
                 <THOActivityCarousel />
                 <AndMoreLabel className="m-b--4 m-r--4" />
             </SkewedCard>
-            <div className="flex flex-col md:flex-row md:gap-4 md:h-280px lg:h-320px">
+            <div className="flex flex-col md:flex-row m-t-4 gap-4 md:h-280px lg:h-320px">
                 <SkewedCard className="flex flex-col lt-md:h-280px">
                     <h3 className="text-whtho7-h3">舞台游戏活动</h3>
                     <ul
@@ -545,7 +586,7 @@ export function THOGameActivities() {
                         </div>
                     </div>
                     <div className="flex flex-row flex-1">
-                        <div className="flex-1 relative opacity-50">
+                        <div className="flex-1 relative opacity-80">
                             <Image
                                 src={"/project_diva_arcade.png"}
                                 alt="project_diva_arcade"
@@ -556,6 +597,172 @@ export function THOGameActivities() {
                         <div className="flex-1" />
                     </div>
                     <AndMoreLabel className="absolute w-fit h-min bottom-0 right-0" />
+                </SkewedCard>
+            </div>
+        </section>
+    );
+}
+
+export function MiniLiveCard() {
+    const logoShowDivRef = useRef<HTMLDivElement>(null);
+    const showYuuhei = useInView(logoShowDivRef, {
+        margin: "0px 0px -40% 0px",
+    });
+    return (
+        <SkewedCard className="md:flex-3 lg:flex-5 flex flex-col lt-md:h-250px gap-2">
+            <h3 ref={logoShowDivRef} className="text-whtho7-h3">
+                场内 MINI LIVE
+            </h3>
+            <p className="">
+                由人气同人音乐社团{" "}
+                <span className="">疯帽子茶会 & 幻想诗篇</span>{" "}
+                <AnimatePresence mode="popLayout">
+                    {showYuuhei && (
+                        <motion.span
+                            key={"yuuhei_text"}
+                            className="opacity-0 lg:m-r--100px"
+                            animate={{
+                                opacity: 1,
+                                // 这里使用 margin 同样会导致卡慢的动画，所以感觉流畅的动画还是给大屏吧（
+                                marginRight: "0px",
+                            }}
+                            exit={{
+                                opacity: 0,
+                            }}>
+                            & 幽闭星光&nbsp;
+                        </motion.span>
+                    )}
+                </AnimatePresence>
+                带来的同人 LIVE 表演！
+            </p>
+            <div className="flex-1 flex flex-row bg-whtho7-green bg-opacity-40 rounded-lg shadow-[0_0_4px_1px] shadow-white">
+                <figure className="relative flex-1">
+                    <Image
+                        src={"/疯帽子茶会_LOGO.png"}
+                        alt="疯帽子茶会 LOGO"
+                        fill
+                        className="object-cover"
+                    />
+                </figure>
+                <figure className="relative flex-1">
+                    <Image
+                        src={"/幻想诗篇Xanadu_CantoLOGO.png"}
+                        alt="幻想诗篇Xanadu_CantoLOGO"
+                        fill
+                        className="object-contain"
+                    />
+                </figure>
+                <AnimatePresence mode="popLayout">
+                    {showYuuhei && (
+                        <motion.figure
+                            className="relative opacity-0 w-1/3 lg:w-0"
+                            // 这个图片宽度缩放在（我的）手机上会有比较肉眼可见的卡顿，虽然动画确实看着舒服
+                            animate={{
+                                opacity: 1,
+                                width: "33.3%",
+                            }}
+                            exit={{
+                                opacity: 0,
+                                scale: 0,
+                            }}>
+                            <Image
+                                src={"/幽閉サテライト.png"}
+                                alt="幽閉サテライト.png"
+                                fill
+                                className="object-contain"
+                            />
+                        </motion.figure>
+                    )}
+                </AnimatePresence>
+            </div>
+        </SkewedCard>
+    );
+}
+
+export function ClickToShowMusicNote({
+    children,
+    className,
+    r = 200,
+}: {
+    children: React.ReactNode;
+    className?: string | undefined;
+    r?: number;
+}) {
+    const [musicNotes, setMusicNotes] = useImmer(
+        [] as { x: number; y: number; duration: number; noteType: number }[]
+    );
+    const musicNoteSvg = [MdiMusic, MdiMusicNote, MdiMusicNoteQuarter];
+    return (
+        <motion.div
+            className={`${className ?? ""}`}
+            onClick={() => {
+                setMusicNotes((draft) => {
+                    draft.push({
+                        x: Math.random() * r - r / 2,
+                        y: Math.random() * r - r / 2,
+                        duration: Math.random() * 1 + 1,
+                        noteType: Math.floor(Math.random() * 3),
+                    });
+                });
+            }}
+            whileTap={{
+                scale: 0.9,
+            }}>
+            {children}
+            {musicNotes.map((item, _) => (
+                <motion.div
+                    key={item.x}
+                    className="absolute top-50% left-50% z-10 aspect-square h-16px"
+                    initial={{
+                        opacity: 1,
+                        transform: `translateX(0px) translateY(0px)`,
+                    }}
+                    animate={{
+                        opacity: 0,
+                        transform: `translateX(${item.x}px) translateY(${item.y}px)`,
+                        transition: {
+                            duration: item.duration,
+                            ease: "linear",
+                        },
+                    }}
+                    onAnimationEnd={() => {
+                        setMusicNotes((draft) => {
+                            draft.splice(draft.indexOf(item), 1);
+                        });
+                    }}>
+                    {musicNoteSvg[item.noteType]({
+                        className: "w-full h-full",
+                    })}
+                </motion.div>
+            ))}
+        </motion.div>
+    );
+}
+
+export function THOMusicActivities() {
+    return (
+        <section>
+            <Whtho7H2Div
+                title="音乐活动"
+                titleClassName={`${lxgw.className}`}
+                rootClassName="m-t-4"
+            />
+            <div className="flex flex-col md:flex-row m-t-4 gap-4 md:h-300px lg:h-320px relative">
+                <MiniLiveCard />
+                <SkewedCard className="relative md:flex-2 lg:flex-4">
+                    <h3 className="text-whtho7-h3">音乐合奏</h3>
+                    <ul>
+                        <li>独家编曲</li>
+                        <li>多种乐器完美调和</li>
+                        <li>畅想 4 合奏曲目 + 2 独奏曲目</li>
+                        <li>带来意想不到的乐趣</li>
+                    </ul>
+                    <div className="absolute bottom-0 left-0% w-full h-16px">
+                        <MusicNoteSpring />
+                    </div>
+                    <ClickToShowMusicNote className="absolute right-0 top-30% md:top-70% h-100px w-100px z-10">
+                        <p className="text-center">应该是某张图片</p>
+                    </ClickToShowMusicNote>
                 </SkewedCard>
             </div>
         </section>
