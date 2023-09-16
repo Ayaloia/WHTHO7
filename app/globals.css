@@ -28,3 +28,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* translate-z-0 可以防止 svg 在 Firefox 上模糊，strange. */
+svg {
+  transform: translateZ(0);
+ }

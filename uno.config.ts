@@ -21,7 +21,7 @@ export default defineConfig({
     "text-whtho7-h2": "text-6 md:text-7 lg:text-8",
     "text-whtho7-h3": "text-5 md:text-6 lg:text-7",
     "text-whtho7-p": "text-4 md:text-5 lg:text-6",
-    "text-whtho7-small": "text-2 md:text-3 lg:text-4",
+    "text-whtho7-small": "text-3 md:text-4 lg:text-5",
     "w-whtho7-layout": "m-x-auto w-87.5% max-w-360px md:w-716px md:max-w-none lg:w-972px",
     "flex-2": "flex-[2_2_0%]",
     "flex-3": "flex-[3_3_0%]",
@@ -30,6 +30,7 @@ export default defineConfig({
     "flex-6": "flex-[6_6_0%]",
     "keyframes-random-move": "keyframes-horizontal keyframes-vertical",
     "animate-random-move": "keyframes-random-move animation-random-move animation-composition-accumulate", 
+    "transition-common": "transition ease-in-out duration-400",
   },
   theme: {
     colors: {
@@ -38,7 +39,10 @@ export default defineConfig({
       "whtho-bg": "#0d1a1b",
       "whtho7-green": "#2cbe9a",
       "whtho7-blue": "#a3fffe",
+      "whtho7-yellow": "#fdf768",
       "card-bg": "#1a222a",
+      "bilibili-pink": "#fc8bab",
+      "taobao-orange": "#ff6a00",
     },
     fontFamily: {
       "sans-serif": ["Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif"],

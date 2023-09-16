@@ -9,11 +9,18 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { Carousel } from "antd";
-import { useRef, useState } from "react";
+import { SVGProps, useRef, useState } from "react";
 import { CarouselRef } from "antd/es/carousel";
 import { SkewedCard } from "./IndexClientComponent";
-import { MdiMusic, MdiMusicNote, MdiMusicNoteQuarter } from "./svg";
+import {
+    BilibiliIcon,
+    MdiMusic,
+    MdiMusicNote,
+    MdiMusicNoteQuarter,
+    TaobaoFillIcon,
+} from "./svg";
 import { useImmer } from "use-immer";
+import Link from "next/link";
 
 const lxgw = localFont({
     src: "LXGWWenKaiScreen.woff2",
@@ -32,6 +39,7 @@ export default function Home() {
                     <THOGameActivities />
                     <THOMusicActivities />
                 </section>
+                <THOTicketMsg />
                 <section className="m-t-10">111</section>
             </main>
         </>
@@ -100,6 +108,35 @@ export function RandomInvert() {
                 },
             }}
         />
+    );
+}
+
+export function LinkButton({
+    href,
+    title,
+    bgColorClassName,
+    className,
+    svgElement,
+}: {
+    href: string;
+    title: string;
+    bgColorClassName: string;
+    className?: string;
+    svgElement: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+}) {
+    return (
+        <Link
+            target="_blank"
+            href={href}
+            className={`p-y-4 p-x-8 text-center max-w-full w-224px h-72px md:h-72px lg:h-80px rounded-full text-whtho7-h2 font-sans font-semibold flex flex-row justify-evenly items-center
+            ${bgColorClassName} fill-white hover:brightness-110 transition-common hover:shadow-white hover:shadow-sm ${
+                className ?? ""
+            }`}>
+            {svgElement({
+                className: "h-full",
+            })}
+            <span>{title}</span>
+        </Link>
     );
 }
 
@@ -766,6 +803,101 @@ export function THOMusicActivities() {
                     </ClickToShowMusicNote>
                 </SkewedCard>
             </div>
+        </section>
+    );
+}
+
+export function THOTicketMsg() {
+    return (
+        <section className="w-whtho7-layout">
+            <Whtho7H1Div
+                title="购票相关"
+                titleClassName={`${lxgw.className}`}
+                className="flex flex-col md:flex-row justify-evenly gap-4">
+                {[
+                    ["普通票 65 元", "免费会场折页，全天不限次数进出场！"],
+                    ["特典票 110 元", "包含额外的场限 CD 与合同志场刊！"],
+                ].map((ticket, index) => (
+                    <div>
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-whtho7-h2 text-whtho7-yellow">
+                                {ticket[0]}
+                            </h2>
+                            <motion.p
+                                className="w-fit"
+                                variants={{
+                                    ...getTranslateVariantsByXY(0, -1),
+                                    show: {
+                                        ...getTranslateVariantsByXY(0, -1).show,
+                                        transition: { delay: 0.4 },
+                                    },
+                                }}>
+                                {ticket[1]}
+                            </motion.p>
+                        </div>
+                    </div>
+                ))}
+            </Whtho7H1Div>
+            <Whtho7H2Div
+                title="特典详情"
+                titleClassName={`${lxgw.className}`}></Whtho7H2Div>
+            <SkewedCard className="flex flex-col md:flex-row-reverse m-t-4">
+                <article className="text-right">
+                    <h3 className="text-whtho7-h3">特典 1</h3>
+                    <p>
+                        神子大人特别关照拨款
+                        <br />
+                        东方说唱同音社团——异象聚合
+                        <br />
+                        鼎力制作的神灵庙主题音乐专辑
+                    </p>
+                </article>
+                <figure className="grow-1 h-300px md:h-400px relative">
+                    一个非常好图片
+                </figure>
+            </SkewedCard>
+            <SkewedCard className="flex flex-col md:flex-row m-t-4 flex-wrap">
+                <article className="text-left">
+                    <h3 className="text-whtho7-h3">特典 2</h3>
+                    <p>怀旧 00 年”故事会“风格杂志《梦殿妙》</p>
+                    <ul className="list-disc list-inside text-whtho7-h3">
+                        <li>独家漫画</li>
+                        <li>短篇小说</li>
+                    </ul>
+                </article>
+                <figure className="grow-1 h-300px md:h-400px relative">
+                    另一个非常好图片
+                </figure>
+                <p className="h-min text-gray-2 text-whtho7-small leading-normal">
+                    在活动开始后，会场限定产品会有余量售卖；
+                    <br className="md:hidden" />
+                    淘宝购票当天通过订单号验证，请确认收货~
+                    <br />
+                    详情请游客群联系组委
+                </p>
+            </SkewedCard>
+            <Whtho7H2Div
+                title="购票链接"
+                titleClassName={`${lxgw.className}`}
+                rootClassName="m-t-4"
+                className="m-t-4">
+                <SkewedCard
+                    rotateMultiple={1}
+                    className="flex flex-col md:flex-row md:justify-evenly items-center gap-4 p-4 rounded-lg border-2 border-white">
+                    <LinkButton
+                        href="https://show.bilibili.com/platform/detail.html?id=75905"
+                        title="会员购"
+                        bgColorClassName="bg-bilibili-pink"
+                        svgElement={BilibiliIcon}
+                    />
+                    <LinkButton
+                        href="https://item.taobao.com/item.htm?ft=t&id=684322700306"
+                        title="淘宝"
+                        bgColorClassName="bg-taobao-orange"
+                        svgElement={TaobaoFillIcon}
+                    />
+                </SkewedCard>
+            </Whtho7H2Div>
         </section>
     );
 }
