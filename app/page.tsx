@@ -321,10 +321,10 @@ export function Whtho7H2Div(
                     titleClassName ?? ""
                 } rounded-1 bg-whtho7-cyan-2 shadow-[0_0_8px_4px_#0000] shadow-whtho7-cyan border-2 border-whtho7-cyan`}
                 variants={{
-                    hidden: { opacity: 0, scale: 0 },
+                    hidden: { opacity: 0, transform: "scale(0)" },
                     show: {
                         opacity: 1,
-                        scale: 1.0,
+                        transform: "scale(1)",
                     },
                 }}>
                 {title}
@@ -655,15 +655,16 @@ export function MiniLiveCard() {
                 <AnimatePresence mode="popLayout">
                     {showYuuhei && (
                         <motion.figure
-                            className="relative opacity-0 w-1/3 lg:w-0"
+                            className="relative opacity-0 w-1/3 lg:w-0 scale-100"
                             // 这个图片宽度缩放在（我的）手机上会有比较肉眼可见的卡顿，虽然动画确实看着舒服
                             animate={{
                                 opacity: 1,
                                 width: "33.3%",
+                                transform: "scale(1)",
                             }}
                             exit={{
                                 opacity: 0,
-                                scale: 0,
+                                transform: "scale(0)",
                             }}>
                             <Image
                                 src={"/幽閉サテライト.png"}
