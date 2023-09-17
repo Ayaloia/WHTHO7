@@ -3,13 +3,15 @@ import localFont from "next/font/local";
 import {
     AnimatePresence,
     motion,
+    stagger,
+    useAnimate,
     useInView,
     useScroll,
     useTransform,
 } from "framer-motion";
 import Image from "next/image";
 import { Carousel } from "antd";
-import { SVGProps, useRef, useState } from "react";
+import { SVGProps, useCallback, useEffect, useRef, useState } from "react";
 import { CarouselRef } from "antd/es/carousel";
 import { SkewedCard } from "./IndexClientComponent";
 import {
@@ -17,10 +19,14 @@ import {
     MdiMusic,
     MdiMusicNote,
     MdiMusicNoteQuarter,
+    RefreshLineIcon,
     TaobaoFillIcon,
 } from "./svg";
 import { useImmer } from "use-immer";
 import Link from "next/link";
+import { useMedia } from "react-use";
+import { CircleList, circleItem } from "./circleList";
+import { ReservoirSampling } from "./alg";
 
 const lxgw = localFont({
     src: "LXGWWenKaiScreen.woff2",
@@ -40,6 +46,7 @@ export default function Home() {
                     <THOMusicActivities />
                 </section>
                 <THOTicketMsg />
+                <THOCircleMsg />
                 <section className="m-t-10">111</section>
             </main>
         </>
@@ -137,6 +144,112 @@ export function LinkButton({
             })}
             <span>{title}</span>
         </Link>
+    );
+}
+
+export function ShowCircleItem({
+    logoSrc,
+    name,
+    link = "#",
+}: {
+    logoSrc: string;
+    name: string;
+    link?: string;
+}) {
+    return (
+        <div className="h-150px border-1 shadow-md shadow-black hover:brightness-110% hover:shadow-white transition-common">
+            <Link href={link} target="_blank">
+                <figure className="p-2 h-full w-full flex flex-col">
+                    <div className="relative flex-1 w-full">
+                        <Image
+                            src={logoSrc}
+                            alt={name}
+                            fill
+                            sizes="224px"
+                            className="object-contain"
+                        />
+                    </div>
+                    <figcaption className="text-center text-whtho7-small">
+                        {name}
+                    </figcaption>
+                </figure>
+            </Link>
+        </div>
+    );
+}
+
+export function ShowCircleGrid({
+    itemsList,
+    className,
+    buttonClassName,
+    buttonText = "刷新",
+}: {
+    itemsList: circleItem[];
+    className?: string;
+    buttonClassName?: string;
+    buttonText?: string;
+}) {
+    const isMd = useMedia("(min-width: 768px)", false);
+    const isLg = useMedia("(min-width: 1024px)", false);
+    const [circleList, setCircleList] = useState(itemsList.slice(0, 1));
+    const RefrashRandomCircleList = useCallback(() => {
+        setCircleList(
+            ReservoirSampling(
+                Math.random() > 0.5 ? itemsList : itemsList.toReversed(),
+                isLg ? 20 : isMd ? 16 : 6
+            )
+        );
+    }, [itemsList, isLg, isMd]);
+    useEffect(() => {
+        RefrashRandomCircleList();
+    }, [RefrashRandomCircleList]);
+    const [scope, animate] = useAnimate();
+    useEffect(() => {
+        animate(
+            "div",
+            {
+                opacity: [0, 1],
+                transform: ["scale(1.05)", "scale(1)"],
+            },
+            {
+                type: "spring",
+                duration: 0.8,
+                bounce: 0.1,
+                delay: stagger(0.03),
+            }
+        );
+    }, [circleList]);
+    return (
+        <div className={`${className ?? ""}`}>
+            <div
+                className={`max-h-450px overflow-hidden m-t--4 m-x--4 rounded-lg`}>
+                <div
+                    ref={scope}
+                    className="relative top--20px left--5px [--need-piece:6] md:top--100px md:left--25px md:[--need-piece:16] lg:top--90px lg:left-5px lg:[--need-piece:20] grid grid-cols-[repeat(2,_minmax(180px,_1fr))] md:grid-cols-[repeat(4,_minmax(180px,_1fr))] lg:grid-cols-[repeat(5,_minmax(180px,_1fr))] gap-4 rotate-15">
+                    {circleList.map((circleItem, index) => (
+                        <ShowCircleItem
+                            key={`${circleItem.name}`}
+                            logoSrc={circleItem.logoSrc}
+                            name={`${circleItem.name}`}
+                        />
+                    ))}
+                </div>
+            </div>
+            <button
+                type="button"
+                className={`${
+                    buttonClassName ?? ""
+                } group m-t-2 m-x-auto w-fit flex flex-row items-center h-36px md:h-42px lg:h-48px gap-2 p-y-2 p-x-4 transition-common hover:scale-105`}
+                onClick={() => {
+                    RefrashRandomCircleList();
+                }}>
+                {RefreshLineIcon({
+                    className:
+                        "fill-white h-full transition-common group-active:rotate--360 group-active:duration-0",
+                })}
+                <span>{buttonText}</span>
+            </button>
+        </div>
     );
 }
 
@@ -898,6 +1011,20 @@ export function THOTicketMsg() {
                     />
                 </SkewedCard>
             </Whtho7H2Div>
+        </section>
+    );
+}
+
+export function THOCircleMsg() {
+    return (
+        <section className="w-whtho7-layout">
+            <Whtho7H1Div title="会场详情" titleClassName={`${lxgw.className}`}>
+                这里插入图片或者其他更高级的东西
+            </Whtho7H1Div>
+            <Whtho7H2Div title="参展社团"></Whtho7H2Div>
+            <SkewedCard className="m-t-4">
+                <ShowCircleGrid itemsList={CircleList} />
+            </SkewedCard>
         </section>
     );
 }
