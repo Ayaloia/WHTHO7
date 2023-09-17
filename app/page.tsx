@@ -36,7 +36,7 @@ export default function Home() {
     return (
         <>
             <main
-                className={`bg-whtho-bg h-fit font-sans-serif text-white text-whtho7-p`}>
+                className={`bg-whtho-bg h-fit font-sans-serif text-white text-whtho7-p p-b-10`}>
                 <Whtho7LeadIn />
                 <section className="w-whtho7-layout ">
                     <Whtho7H1Div
@@ -47,8 +47,12 @@ export default function Home() {
                 </section>
                 <THOTicketMsg />
                 <THOCircleMsg />
-                <section className="m-t-10">111</section>
+                <THOExtraMsg />
             </main>
+            <footer className="bg-card-bg text-whtho7-small text-white h-100px w-full flex flex-col items-center justify-center">
+                <p>测试测试</p>
+                <p>2023 的滴滴滴滴滴滴多多多多多</p>
+            </footer>
         </>
     );
 }
@@ -1025,6 +1029,17 @@ export function THOCircleMsg() {
             <SkewedCard className="m-t-4">
                 <ShowCircleGrid itemsList={CircleList} />
             </SkewedCard>
+        </section>
+    );
+}
+
+export function THOExtraMsg() {
+    return (
+        <section className="w-whtho7-layout">
+            <Whtho7H1Div title="额外内容" titleClassName={`${lxgw.className}`}>
+                这些是……？！
+            </Whtho7H1Div>
+            <p>大概可以放些东西</p>
         </section>
     );
 }
