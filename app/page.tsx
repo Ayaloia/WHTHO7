@@ -631,6 +631,7 @@ export function THOMsgList() {
             viewport={{
                 margin: "10% 0px -30% 0px",
                 amount: 0,
+                once: true,
             }}
             className="space-y-1  m-x-auto m-t-10">
             {msgMap.map((msg, index) => (
@@ -761,6 +762,7 @@ export function MiniLiveCard() {
     const logoShowDivRef = useRef<HTMLDivElement>(null);
     const showYuuhei = useInView(logoShowDivRef, {
         margin: "0px 0px -40% 0px",
+        once: true,
     });
     return (
         <SkewedCard className="md:flex-3 lg:flex-5 flex flex-col lt-md:h-250px gap-2">
@@ -848,7 +850,7 @@ export function ClickToShowMusicNote({
     );
     const musicNoteSvg = [MdiMusic, MdiMusicNote, MdiMusicNoteQuarter];
     return (
-        <motion.div
+        <div
             className={`${className ?? ""}`}
             onClick={() => {
                 setMusicNotes((draft) => {
@@ -859,11 +861,10 @@ export function ClickToShowMusicNote({
                         noteType: Math.floor(Math.random() * 3),
                     });
                 });
-            }}
-            whileTap={{
-                scale: 0.9,
             }}>
-            {children}
+            <motion.div className="h-full w-full" whileTap={{ scale: 0.9 }}>
+                {children}
+            </motion.div>
             {musicNotes.map((item, _) => (
                 <motion.div
                     key={item.x}
@@ -890,7 +891,7 @@ export function ClickToShowMusicNote({
                     })}
                 </motion.div>
             ))}
-        </motion.div>
+        </div>
     );
 }
 
@@ -915,8 +916,8 @@ export function THOMusicActivities() {
                     <div className="absolute bottom-0 left-0% w-full h-16px">
                         <MusicNoteSpring />
                     </div>
-                    <ClickToShowMusicNote className="absolute right-0 top-30% md:top-70% h-100px w-100px z-10">
-                        <p className="text-center">应该是某张图片</p>
+                    <ClickToShowMusicNote className="absolute right-0 top-30% md:top-60% h-100px w-100px z-10">
+                        <p className="text-center">应该是某张图片(可点击)</p>
                     </ClickToShowMusicNote>
                 </SkewedCard>
             </div>
