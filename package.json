@@ -12,7 +12,7 @@
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
-    "antd": "^5.9.0",
+    "antd": "^5.9.1",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
@@ -27,6 +27,7 @@
     "use-immer": "^0.9.0"
   },
   "devDependencies": {
+    "@unocss/eslint-config": "^0.55.7",
     "@unocss/postcss": "^0.55.7",
     "tailwind.css": "link:@unocss/reset/tailwind.css",
     "unocss": "^0.55.7"

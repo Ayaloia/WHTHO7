@@ -2,5 +2,6 @@
     "unocss.root": [
         "/home/aldlss/code/whtho/web"
     ],
-    "svg.preview.background": "editor"
+    "svg.preview.background": "editor",
+    "python.analysis.typeCheckingMode": "basic"
 }
