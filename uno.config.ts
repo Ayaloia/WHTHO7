@@ -55,6 +55,8 @@ export default defineConfig({
             "card-bg": "#1a222a",
             "bilibili-pink": "#fc8bab",
             "taobao-orange": "#ff6a00",
+            "weibo-red": "#d52c2b",
+            "qq-skyblue": "#1fc8fd",
         },
         fontFamily: {
             lxgw: ["var(--font-lxgw)"],

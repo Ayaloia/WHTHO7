@@ -1,4 +1,4 @@
-import { Whtho7LeadIn, Whtho7H1Div } from "./IndexClientComponent";
+import { Whtho7LeadIn, Whtho7H1Div, NavBar } from "./IndexClientComponent";
 import { THOGameActivities } from "./Component";
 import { THOMusicActivities, THOCircleMsg, THOExtraMsg } from "./Component";
 import { THOTicketMsg } from "./IndexClientComponent";
@@ -6,6 +6,7 @@ import { THOTicketMsg } from "./IndexClientComponent";
 export default function Home() {
     return (
         <>
+            <NavBar />
             <main
                 className={`bg-whtho-bg h-fit font-sans-serif text-white text-whtho7-p p-b-10`}>
                 <Whtho7LeadIn />

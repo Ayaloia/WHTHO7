@@ -2,6 +2,7 @@ import WHTHONLYLOGO from "./logo/WHTHONLYLOGO.png";
 import 幻想诗篇Xanadu_CantoLOGO from "./logo/幻想诗篇Xanadu_CantoLOGO.png";
 import 幽閉サテライト from "./logo/幽閉サテライト.png";
 import 疯帽子茶会_LOGO from "./logo/疯帽子茶会_LOGO.png";
+import WHTHONLYLOGOMAIN from "./logo/WHTHONLYLOGOMAIN.png";
 import 幻走_SkyDrift from "./game/幻走_SkyDrift.jpg";
 import 太鼓达人 from "./game/太鼓达人.jpg";
 import chunithm_amazon from "./game/chunithm_amazon.png";
@@ -19,6 +20,7 @@ export {
     幻想诗篇Xanadu_CantoLOGO,
     幽閉サテライト,
     疯帽子茶会_LOGO,
+    WHTHONLYLOGOMAIN,
     幻走_SkyDrift,
     太鼓达人,
     chunithm_amazon,

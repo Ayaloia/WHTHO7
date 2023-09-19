@@ -1,7 +1,13 @@
 "use client";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useMouseHovered, useMedia } from "react-use";
+import {
+    experimental_useEffectEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+import { useMouseHovered, useMedia, useWindowScroll } from "react-use";
 import { useImmer } from "use-immer";
 import { Carousel } from "antd";
 import { CarouselRef } from "antd/es/carousel";
@@ -17,15 +23,19 @@ import {
 import { ReservoirSampling } from "./alg";
 import { ShowCircleItem, THOTicketMsgDetail } from "./Component";
 import {
+    BilibiliIcon,
     MdiMusic,
     MdiMusicNote,
     MdiMusicNoteQuarter,
+    QQIcon,
     RefreshLineIcon,
+    WeiboIcon,
 } from "./svg";
 import { circleItem } from "./circleList";
 import { getTranslateVariantsByXY } from "./tools";
 import {
     WHTHONLYLOGO,
+    WHTHONLYLOGOMAIN,
     东方冰之勇者记,
     东方裁判梦,
     幻想女武神,
@@ -35,6 +45,7 @@ import {
     毛玉大冒险,
     疯帽子茶会_LOGO,
 } from "./image/images";
+import Link from "next/link";
 
 export function SkewedCard({
     children,
@@ -149,9 +160,9 @@ export function Whtho7LeadIn() {
         mainMainScrollYProgressReverse,
         [1, 0.8, 0.5, 0],
         [
-            "translateY(10vh) translateX(-44px)",
-            "translateY(30vh) translateX(-44px)",
-            "translateY(30vh) translateX(-44px) rotate(0deg)",
+            "translateY(10vh) translateX(-50%)",
+            "translateY(30vh) translateX(-50%)",
+            "translateY(30vh) translateX(-50%) rotate(0deg)",
             "translateY(30vh) translateX(0px) rotate(7deg)",
         ]
     );
@@ -778,5 +789,88 @@ export function THOTicketMsg() {
             </Whtho7H1Div>
             <THOTicketMsgDetail />
         </section>
+    );
+}
+
+export function NavBar() {
+    const { y } = useWindowScroll();
+    const [showNavBar, setShowNavBar] = useState(false);
+    const [preY, setPreY] = useState(-1);
+    const [scope, animate] = useAnimate();
+    useEffect(() => {
+        if (!showNavBar) {
+            animate(scope.current, {
+                transform: ["translateY(0px)", "translateY(-110%)"],
+            });
+        } else {
+            animate(scope.current, {
+                transform: ["translateY(-110%)", "translateY(0px)"],
+            });
+        }
+    }, [animate, scope, showNavBar]);
+    const calShow = (nowY: number) => {
+        if (nowY - preY > 150 || nowY === 0) {
+            setShowNavBar(false);
+            setPreY(nowY);
+        } else if (preY - nowY > 150) {
+            setShowNavBar(true);
+            setPreY(nowY);
+        }
+    };
+    useEffect(() => {
+        calShow(y);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [y]);
+
+    return (
+        <header
+            className="fixed top-0 z-20 h-16 w-full flex flex-row justify-between bg-whtho-bg p-x-4 opacity-100 shadow-black shadow-md"
+            ref={scope}>
+            <nav className="h-full w-max flex shrink-0 flex-row items-center justify-start text-white">
+                <Link href="#" replace scroll className="h-full p-y-2">
+                    <Image
+                        src={WHTHONLYLOGOMAIN}
+                        alt="WHTHONLYLOGO"
+                        className="h-full w-auto"
+                        onClick={(e) => {
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                            e.preventDefault();
+                        }}
+                    />
+                </Link>
+            </nav>
+            <address className="h-full flex shrink-1 flex-row items-center justify-end gap-1 md:gap-2">
+                {[
+                    {
+                        icon: BilibiliIcon,
+                        name: "bilibili",
+                        link: "https://space.bilibili.com/330548191",
+                        className: "fill-bilibili-pink hover:bg-bilibili-pink",
+                    },
+                    {
+                        icon: WeiboIcon,
+                        name: "weibo",
+                        link: "https://weibo.com/youyou0613",
+                        className: "fill-weibo-red hover:bg-weibo-red",
+                    },
+                    {
+                        icon: QQIcon,
+                        name: "qq",
+                        link: "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ncDdfWsItAsb5wT_YkJCXC2CiCiuq4xT&authKey=bKaMK8DOEc6qMoADOsE2ImOyEgAeJp22ZIMrAl2LAssrob%2BXwSM0ml9pt6%2Bn5L%2Bj&noverify=0&group_code=106724753",
+                        className: "fill-qq-skyblue hover:bg-qq-skyblue",
+                    },
+                ].map((item, _) => (
+                    <Link
+                        key={item.name}
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer">
+                        {item.icon({
+                            className: `w-32px p-1 box-content rounded-full hover:fill-white transition-common ${item.className}`,
+                        })}
+                    </Link>
+                ))}
+            </address>
+        </header>
     );
 }
