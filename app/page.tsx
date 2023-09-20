@@ -6,7 +6,6 @@ import { THOTicketMsg } from "./IndexClientComponent";
 export default function Home() {
     return (
         <>
-            <NavBar />
             <main
                 className={`bg-whtho-bg h-fit font-sans-serif text-white text-whtho7-p p-b-10`}>
                 <Whtho7LeadIn />

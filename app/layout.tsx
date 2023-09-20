@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import { NavBar } from "./IndexClientComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="scroll-smooth">
             <body className={`${inter.className} ${lxgw.variable} min-w-224px`}>
+                <NavBar />
                 {children}
             </body>
         </html>

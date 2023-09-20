@@ -23,6 +23,7 @@ import {
 import { ReservoirSampling } from "./alg";
 import { ShowCircleItem, THOTicketMsgDetail } from "./Component";
 import {
+    ArrowDropUp,
     BilibiliIcon,
     MdiMusic,
     MdiMusicNote,
@@ -799,13 +800,29 @@ export function NavBar() {
     const [scope, animate] = useAnimate();
     useEffect(() => {
         if (!showNavBar) {
-            animate(scope.current, {
-                transform: ["translateY(0px)", "translateY(-110%)"],
-            });
+            animate([
+                [
+                    scope.current,
+                    { transform: ["translateY(0%)", "translateY(-110%)"] },
+                ],
+                [
+                    "button > svg",
+                    { transform: ["rotateX(0deg)", "rotateX(180deg)"] },
+                    { at: "<" },
+                ],
+            ]);
         } else {
-            animate(scope.current, {
-                transform: ["translateY(-110%)", "translateY(0px)"],
-            });
+            animate([
+                [
+                    scope.current,
+                    { transform: ["translateY(-110%)", "translateY(0%)"] },
+                ],
+                [
+                    "button > svg",
+                    { transform: ["rotateX(180deg)", "rotateX(0deg)"] },
+                    { at: "<" },
+                ],
+            ]);
         }
     }, [animate, scope, showNavBar]);
     const calShow = (nowY: number) => {
@@ -871,6 +888,14 @@ export function NavBar() {
                     </Link>
                 ))}
             </address>
+            <button className="absolute bottom-0 right-0 z--5 h-40px w-64px translate-y-95% rounded-b-lg bg-whtho-bg shadow-[0_3px_3px_0px_#000]">
+                {ArrowDropUp({
+                    className: "fill-white h-full transition-common m-x-auto",
+                    onClick: () => {
+                        setShowNavBar(!showNavBar);
+                    },
+                })}
+            </button>
         </header>
     );
 }
