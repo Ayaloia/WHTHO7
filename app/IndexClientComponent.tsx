@@ -888,12 +888,13 @@ export function NavBar() {
                     </Link>
                 ))}
             </address>
-            <button className="absolute bottom-0 right-0 z--5 h-40px w-64px translate-y-95% rounded-b-lg bg-whtho-bg shadow-[0_3px_3px_0px_#000]">
+            <button
+                className="absolute bottom-0 right-0 z--5 h-40px w-64px translate-y-95% rounded-b-lg bg-whtho-bg shadow-[0_3px_3px_0px_#000]"
+                onClick={() => {
+                    setShowNavBar(!showNavBar);
+                }}>
                 {ArrowDropUp({
                     className: "fill-white h-full transition-common m-x-auto",
-                    onClick: () => {
-                        setShowNavBar(!showNavBar);
-                    },
                 })}
             </button>
         </header>
