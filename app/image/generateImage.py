@@ -17,7 +17,7 @@ def main():
                 if file.endswith((".jpg", ".png", ".jpeg", ".webp")):
                     name = file.split(".")[0]
                     names.append(name)
-                    f.write(f"import {name} from './{nowPath}/{file}';\n")
+                    f.write(f'import {name} from "./{nowPath}/{file}";\n')
 
         f.write("\n")
         f.write("export {\n")
