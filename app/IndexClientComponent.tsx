@@ -1021,7 +1021,7 @@ export function THOExtraMsgDetail() {
                 nowShow.set(1);
                 setShowed(
                     outputItem(
-                        <div className="opacity-80">
+                        <div className="opacity-90">
                             <motion.div
                                 className="relative m-b--30vh"
                                 animate={{
