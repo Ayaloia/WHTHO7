@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import {
     experimental_useEffectEvent,
     useCallback,
@@ -19,6 +19,7 @@ import {
     useTransform,
     stagger,
     useAnimate,
+    useMotionValue,
 } from "framer-motion";
 import { ReservoirSampling } from "./alg";
 import { ShowCircleItem, THOTicketMsgDetail } from "./Component";
@@ -37,8 +38,18 @@ import { getTranslateVariantsByXY } from "./tools";
 import {
     WHTHONLYLOGO,
     WHTHONLYLOGOMAIN,
+    ayaFumo,
+    cirnoFumo,
+    flandreFumo,
+    koishiFumo,
+    leeks,
+    megumu,
+    miko,
+    satoriFumo,
+    ヤゴコロ先生,
     东方冰之勇者记,
     东方裁判梦,
+    太鼓达人,
     幻想女武神,
     幻想诗篇Xanadu_CantoLOGO,
     幻走_SkyDrift,
@@ -47,6 +58,7 @@ import {
     疯帽子茶会_LOGO,
 } from "./image/images";
 import Link from "next/link";
+import { frame } from "framer-motion/dom";
 
 export function SkewedCard({
     children,
@@ -898,5 +910,196 @@ export function NavBar() {
                 })}
             </button>
         </header>
+    );
+}
+
+export function THOExtraMsgDetail() {
+    const rootRef = useRef(null);
+    const { scrollYProgress: rootScrollYProgress } = useScroll({
+        target: rootRef,
+        offset: ["start end", "end end"],
+    });
+    const [showed, setShowed] = useState(<></>);
+    const nowShow = useMotionValue(-1);
+    useEffect(() => {
+        console.log("test");
+        const outputItem = (children: JSX.Element, index: number) => {
+            return (
+                <motion.div
+                    initial={{ opacity: 0, transform: "translateY(200px)" }}
+                    animate={{ opacity: 1, transform: "translateY(0px)" }}
+                    exit={{ opacity: 0, transform: "translateY(-200px)" }}
+                    key={index}
+                    className="sticky top-15vh h-70vh w-full flex flex-col items-center justify-center overflow-y-clip">
+                    {children}
+                </motion.div>
+            );
+        };
+        return rootScrollYProgress.on("change", (latest) => {
+            if (latest <= 0.4) {
+                if (nowShow.get() === 0) return;
+                nowShow.set(0);
+                const generateFumo = (fumo: StaticImageData, key: number) => {
+                    const animationDuration = Math.random() * 2 + 1;
+                    const X = Math.random() * 40 + 5;
+                    const Y = Math.random() * 30 + 5;
+                    return (
+                        <motion.div
+                            key={key}
+                            className="absolute keyframes-zIndexSurround animate-[0s_linear_0s_infinite_normal_none_running_zIndexSurround]"
+                            style={{
+                                animationDuration: `${animationDuration}s`,
+                            }}
+                            animate={{
+                                transform: [
+                                    `scale(1) translateX(-${X}vw) translateY(-${Y}vh)`,
+                                    `scale(1.5) translateX(0) translateY(0)`,
+                                    `scale(1) translateX(${X}vw) translateY(${Y}vh)`,
+                                    `scale(0.5) translateX(0) translateY(0)`,
+                                    `scale(1) translateX(-${X}vw) translateY(-${Y}vh)`,
+                                ],
+                            }}
+                            transition={{
+                                repeat: Infinity,
+                                repeatType: "loop",
+                                repeatDelay: 0,
+                                delay: 0,
+                                duration: animationDuration,
+                                times: [0, 0.25, 0.5, 0.75, 1],
+                                ease: "linear",
+                            }}>
+                            <Image
+                                src={fumo}
+                                alt="fumo"
+                                className="h-50px w-auto"
+                            />
+                        </motion.div>
+                    );
+                };
+                setShowed(
+                    outputItem(
+                        <>
+                            {[
+                                cirnoFumo,
+                                koishiFumo,
+                                satoriFumo,
+                                flandreFumo,
+                            ].map((fumo, index) => generateFumo(fumo, index))}
+                            <motion.div
+                                className="absolute z--10 after:absolute after:left-50% after:top-50% after:z--20 after:shadow-[0_0_25px_25px_#fff] after:content-['']"
+                                animate={{
+                                    transform: [
+                                        "translateY(40vh)",
+                                        "translateY(0vh)",
+                                    ],
+                                    opacity: [1, 1, 1, 0],
+                                }}
+                                transition={{
+                                    ease: "linear",
+                                    duration: 1,
+                                    repeat: Infinity,
+                                    repeatDelay: 1,
+                                    repeatType: "loop",
+                                }}>
+                                <Image
+                                    src={ayaFumo}
+                                    alt="ayaFumo"
+                                    className="h-50px w-auto"
+                                />
+                            </motion.div>
+                            <Image
+                                src={太鼓达人}
+                                alt={"top"}
+                                className="h-100px w-auto"
+                            />
+                        </>,
+                        0
+                    )
+                );
+            } else if (latest <= 0.7) {
+                if (nowShow.get() === 1) return;
+                nowShow.set(1);
+                setShowed(
+                    outputItem(
+                        <div className="opacity-80">
+                            <motion.div
+                                className="relative m-b--30vh"
+                                animate={{
+                                    transform: [
+                                        "translateX(-30vw)",
+                                        "translateX(30vw)",
+                                    ],
+                                }}
+                                transition={{
+                                    duration: 1.5,
+                                    ease: "linear",
+                                    repeat: Infinity,
+                                    repeatDelay: 0,
+                                    repeatType: "reverse",
+                                }}>
+                                <Image
+                                    src={ヤゴコロ先生}
+                                    alt="ヤゴコロ先生"
+                                    className="h-370px w-auto"
+                                />
+                                <motion.div
+                                    className="absolute left--75% top-32% origin-center"
+                                    animate={{
+                                        transform: [
+                                            "rotate(0deg)",
+                                            "rotate(360deg)",
+                                        ],
+                                    }}
+                                    transition={{
+                                        ease: "linear",
+                                        duration: 1,
+                                        repeat: Infinity,
+                                        repeatDelay: 0,
+                                        repeatType: "loop",
+                                    }}>
+                                    <Image
+                                        src={leeks}
+                                        alt="leeks"
+                                        className="h-auto w-80%"
+                                    />
+                                </motion.div>
+                            </motion.div>
+                        </div>,
+                        1
+                    )
+                );
+            } else if (latest <= 1) {
+                if (nowShow.get() === 2) return;
+                nowShow.set(2);
+                setShowed(
+                    outputItem(
+                        <>
+                            <Image
+                                src={miko}
+                                alt="miko"
+                                className="h-50vh w-auto"
+                            />
+                            <Image
+                                src={megumu}
+                                alt="megumo"
+                                className="absolute right-0"
+                            />
+                            <Image
+                                src={megumu}
+                                alt="megumo"
+                                className="absolute left-0 rotate-y-180"
+                            />
+                        </>,
+                        2
+                    )
+                );
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    return (
+        <div ref={rootRef} className="h-270vh">
+            <AnimatePresence mode="popLayout">{showed}</AnimatePresence>
+        </div>
     );
 }

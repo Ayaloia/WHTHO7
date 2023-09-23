@@ -11,6 +11,7 @@ import {
     Whtho7H1Div,
     MusicNoteSpring,
     AndMoreLabel,
+    THOExtraMsgDetail,
 } from "./IndexClientComponent";
 import { CircleList } from "./circleList";
 import { BilibiliIcon, TaobaoFillIcon } from "./svg";
@@ -235,7 +236,7 @@ export function THOExtraMsg() {
     return (
         <section className="w-whtho7-layout">
             <Whtho7H1Div title="额外内容">这些是……？！</Whtho7H1Div>
-            <p>大概可以放些东西</p>
+            <THOExtraMsgDetail />
         </section>
     );
 }

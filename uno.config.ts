@@ -76,6 +76,7 @@ export default defineConfig({
             keyframes: {
                 horizontal: `{from { transform: translateX(0) }to { transform: translateX(calc(100vw - 100%)) }}`,
                 vertical: `{from { transform: translateY(0); }to { transform: translateY(calc(100vh - 100%)); }}`,
+                zIndexSurround: `{0% { z-index: 10; } 49% { z-index: 10; } 50% { z-index: -10; } 99% { z-index: -10; } 100% { z-index: 10; }}`,
             },
         },
     },

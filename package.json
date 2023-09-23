@@ -12,24 +12,25 @@
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
-    "antd": "^5.9.1",
+    "antd": "^5.9.2",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "framer-motion": "^10.16.4",
     "immer": "^10.0.2",
-    "next": "13.4.19",
+    "next": "13.5.2",
     "postcss": "8.4.27",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-use": "^17.4.0",
+    "sharp": "^0.32.6",
     "typescript": "5.1.6",
     "use-immer": "^0.9.0"
   },
   "devDependencies": {
-    "@unocss/eslint-config": "^0.55.7",
-    "@unocss/postcss": "^0.55.7",
+    "@unocss/eslint-config": "^0.56.1",
+    "@unocss/postcss": "^0.56.1",
     "tailwind.css": "link:@unocss/reset/tailwind.css",
-    "unocss": "^0.55.7"
+    "unocss": "^0.56.1"
   }
 }

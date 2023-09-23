@@ -14,7 +14,7 @@ def main():
                 nowPath = nowPath[1]
 
             for file in files:
-                if file.endswith((".jpg", ".png", ".jpeg", ".webp")):
+                if file.endswith((".jpg", ".png", ".jpeg", ".webp", ".gif")):
                     name = file.split(".")[0]
                     names.append(name)
                     f.write(f'import {name} from "./{nowPath}/{file}";\n')
