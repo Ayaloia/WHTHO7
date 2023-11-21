@@ -141,6 +141,7 @@ export function ShowCircleGrid({
                             key={`${circleItem.name}`}
                             logoSrc={circleItem.logoSrc}
                             name={`${circleItem.name}`}
+                            link="https://thwiki.cc/%E5%B9%BD%E9%97%AD%E6%98%9F%E5%85%89"
                         />
                     ))}
                 </div>
@@ -201,9 +202,6 @@ export function Whtho7LeadIn() {
                 style={{
                     opacity: mainMainOpacity,
                 }}>
-                <p className="absolute bottom-20% left-10%">
-                    这里缺少背景图片和左右两边的图片
-                </p>
                 <h1
                     className={`font-lxgw font-light text-5xl md:text-6xl lg:text-7xl absolute text-center top-40vh text-whtho7-cyan `}>
                     武汉 THO 7

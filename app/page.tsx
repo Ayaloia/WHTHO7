@@ -16,11 +16,11 @@ export default function Home() {
                 </section>
                 <THOTicketMsg />
                 <THOCircleMsg />
-                <THOExtraMsg />
+                {/* <THOExtraMsg /> */}
             </main>
             <footer className="h-100px w-full flex flex-col items-center justify-center bg-card-bg text-white text-whtho7-small">
-                <p>测试测试</p>
-                <p>2023 的滴滴滴滴滴滴多多多多多</p>
+                <p>2023</p>
+                <p>武汉 Touhou Only</p>
             </footer>
         </>
     );

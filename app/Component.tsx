@@ -16,6 +16,10 @@ import {
 import { CircleList } from "./circleList";
 import { BilibiliIcon, TaobaoFillIcon } from "./svg";
 import {
+    CD,
+    band,
+    book1,
+    book2,
     chunithm_amazon,
     chunithm_amazon_plus,
     fxtz,
@@ -209,8 +213,8 @@ export function THOMusicActivities() {
                     <div className="absolute bottom-0 left-0% h-16px w-full">
                         <MusicNoteSpring />
                     </div>
-                    <ClickToShowMusicNote className="absolute right-0 top-30% z-10 h-100px w-100px md:top-60%">
-                        <p className="text-center">应该是某张图片(可点击)</p>
+                    <ClickToShowMusicNote className="absolute right-0 top-50% z--10 h-150px w-150px translate-x-5% translate-y--50% md:top-100% md:h-200px md:w-200px lg:translate-y--100% md:translate-y--80%">
+                        <Image src={band} alt="band w-auto h-auto" />
                     </ClickToShowMusicNote>
                 </SkewedCard>
             </div>
@@ -222,7 +226,7 @@ export function THOCircleMsg() {
     return (
         <section className="w-whtho7-layout">
             <Whtho7H1Div title="会场详情">
-                这里插入图片或者其他更高级的东西
+                场地内部设有62个社团摊位，游戏区、音游区与寄售区。官方摊位设于寄售区，会场外走廊有休息区，凭佩戴好的手环重复进场。
             </Whtho7H1Div>
             <Whtho7H2Div title="参展社团"></Whtho7H2Div>
             <SkewedCard className="m-t-4">
@@ -245,10 +249,10 @@ export function THOTicketMsgDetail() {
     return (
         <>
             <Whtho7H2Div title="特典详情"></Whtho7H2Div>
-            <SkewedCard className="m-t-4 flex flex-col md:flex-row-reverse">
+            <SkewedCard className="m-t-4 flex flex-col md:flex-row">
                 <article className="text-right">
                     <h3 className="text-whtho7-h3">特典 1</h3>
-                    <p>
+                    <p className="w-max">
                         神子大人特别关照拨款
                         <br />
                         东方说唱同音社团——异象聚合
@@ -257,10 +261,14 @@ export function THOTicketMsgDetail() {
                     </p>
                 </article>
                 <figure className="relative h-300px grow-1 md:h-400px">
-                    一个非常好图片
+                    <Image
+                        src={CD}
+                        alt="alt"
+                        className="m-l-auto m-r--4 h-full w-auto"
+                    />
                 </figure>
             </SkewedCard>
-            <SkewedCard className="m-t-4 flex flex-col flex-wrap md:flex-row">
+            <SkewedCard className="m-t-4 flex flex-col flex-wrap md:flex-row-reverse">
                 <article className="text-left">
                     <h3 className="text-whtho7-h3">特典 2</h3>
                     <p>怀旧 00 年”故事会“风格杂志《梦殿妙》</p>
@@ -269,10 +277,11 @@ export function THOTicketMsgDetail() {
                         <li>短篇小说</li>
                     </ul>
                 </article>
-                <figure className="relative h-300px grow-1 md:h-400px">
-                    另一个非常好图片
+                <figure className="relative h-300px flex grow-1 flex-row items-end justify-start gap-1 md:h-400px">
+                    <Image src={book1} alt="book1" className="h-full w-auto" />
+                    <Image src={book2} alt="book2" className="h-50% w-auto" />
                 </figure>
-                <p className="h-min leading-normal text-gray-2 text-whtho7-small">
+                <p className="h-min w-full text-left leading-normal text-gray-2 text-whtho7-small">
                     在活动开始后，会场限定产品会有余量售卖；
                     <br className="md:hidden" />
                     淘宝购票当天通过订单号验证，请确认收货~

@@ -8,8 +8,12 @@ import 幻想诗篇Xanadu_CantoLOGO from "./logo/幻想诗篇Xanadu_CantoLOGO.pn
 import 幽閉サテライト from "./logo/幽閉サテライト.png";
 import 疯帽子茶会_LOGO from "./logo/疯帽子茶会_LOGO.png";
 import WHTHONLYLOGOMAIN from "./logo/WHTHONLYLOGOMAIN.png";
+import book2 from "./other/book2.png";
+import CD from "./other/CD.png";
+import book1 from "./other/book1.png";
 import leeks from "./other/leeks.png";
 import megumu from "./other/megumu.gif";
+import band from "./other/band.png";
 import ヤゴコロ先生 from "./other/ヤゴコロ先生.png";
 import miko from "./other/miko.png";
 import 幻走_SkyDrift from "./game/幻走_SkyDrift.jpg";
@@ -35,8 +39,12 @@ export {
     幽閉サテライト,
     疯帽子茶会_LOGO,
     WHTHONLYLOGOMAIN,
+    book2,
+    CD,
+    book1,
     leeks,
     megumu,
+    band,
     ヤゴコロ先生,
     miko,
     幻走_SkyDrift,
